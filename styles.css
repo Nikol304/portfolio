@@ -1,9 +1,14 @@
 :root{
+  /* light mode: pink accent for a soft, modern look */
   --primary:#e974b4;
   --primary-dark:#c65a9c;
   --bg:#fafafa;
   --card:#ffffff;
   --text:#1f1f1f;
+  /* contrast color for primary foreground (text on primary) */
+  --primary-foreground: #ffffff;
+  /* softer elevated surface for buttons */
+  --surface-elevated: #f7f7fb;
   --muted:#6b6b6b;
   --border:#ececec;
 }
@@ -23,7 +28,11 @@ body{
 .brand{ font-weight:700; letter-spacing:.2px; color:var(--text); text-decoration:none }
 .nav ul{ display:flex; gap:.25rem; list-style:none; margin:0; padding:0 }
 .nav a{ display:inline-block; padding:.5rem .8rem; border-radius:.6rem; text-decoration:none; color:var(--text) }
-.nav a.active, .nav a:hover{ background:#f6eef3; color:#a44386 }
+.nav a.active, .nav a:hover{
+  /* subtle pink-tinted hover in light mode */
+  background: rgba(233,116,180,0.08);
+  color: var(--primary);
+}
 
 /* Hero */
 .hero{
@@ -51,7 +60,7 @@ body{
 .cta.ghost{ background:transparent; color:#fff; border-color:#fff }
 
 /* Page header (used on non-hero pages) */
-.pagehead{ background:linear-gradient(135deg, rgba(233,116,180,.08), rgba(198,90,156,.06)); border-bottom:1px solid var(--border) }
+.pagehead{ background:linear-gradient(135deg, rgba(233,116,180,.06), rgba(198,90,156,.04)); border-bottom:1px solid var(--border) }
 .pagehead-inner{ max-width:1080px; margin:0 auto; padding:2.2rem 1rem }
 h1{ margin:0 0 .5rem; font-size:2rem }
 .lead{ color:var(--muted); margin:0 }
@@ -79,9 +88,36 @@ h1{ margin:0 0 .5rem; font-size:2rem }
 .card h3{ margin:.1rem 0 .25rem; font-size:1.1rem }
 .card p{ margin:.25rem 0 .8rem; color:var(--muted); font-size:.98rem }
 .btnrow{ display:flex; flex-wrap:wrap; gap:.5rem }
-.button{ display:inline-block; padding:.55rem .8rem; font-weight:600; border-radius:.6rem; text-decoration:none; border:1px solid var(--border); background:#fff; color:var(--text) }
-.button.primary{ background:var(--primary); color:#fff; border-color:transparent }
-.button.primary:hover{ background:var(--primary-dark) }
+.button{
+  display:inline-block;
+  padding:.55rem .8rem;
+  font-weight:600;
+  border-radius:.6rem;
+  text-decoration:none;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+}
+
+.button.primary{
+  /* stronger, accessible primary style with slight gradient */
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  color: var(--primary-foreground);
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(198,90,156,.12);
+}
+
+.button.primary:hover{
+  filter:brightness(.96);
+  transform: translateY(-1px);
+}
+
+/* Make non-primary buttons slightly elevated for contrast in dark mode */
+.button:not(.primary){
+  background: var(--surface-elevated);
+}
+
+.button:focus{ outline:3px solid rgba(233,116,180,.14); outline-offset:3px }
 .button:hover{ text-decoration:none; border-color:#ddd }
 
 /* About content */
@@ -96,7 +132,59 @@ h1{ margin:0 0 .5rem; font-size:2rem }
 }
 
 /* Footer */
-.footer{ border-top:1px solid var(--border); background:#fff; color:#666; text-align:center; padding:1rem 0 }
+.footer{ border-top:1px solid var(--border); background:var(--card); color:var(--muted); text-align:center; padding:1rem 0 }
+
+/* Theme toggle button (injected into .nav-inner by JS) */
+.theme-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.35rem .6rem;
+  border-radius:.6rem;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+  font-weight:600;
+}
+.theme-toggle:focus{ outline:3px solid rgba(124,92,255,.12); outline-offset:2px }
+.theme-toggle svg{ width:18px; height:18px; display:block }
+
+/* Dark theme variables — adjusted for a calmer, cohesive palette */
+:root[data-theme="dark"], [data-theme="dark"]{
+  /* deep, warm navy background */
+  --bg: #0b1220;
+  /* slightly lighter card surface */
+  --card: #0f1724;
+  /* soft off-white for comfortable reading */
+  --text: #e6eef6;
+  /* muted desaturated blue for secondary text */
+  --muted: #94a6b6;
+  /* subtle, slightly lighter border to separate surfaces */
+  --border: #152231;
+  /* a calm violet accent that pairs with navy */
+  --primary: #7c5cff;
+  --primary-dark: #6a4ef0;
+  /* make primary button foreground match the page background in dark mode */
+  --primary-foreground: var(--bg);
+  /* slightly darker elevated surface for non-primary buttons in dark mode */
+  --surface-elevated: #0b1320;
+}
+
+/* smooth theme transition for colors */
+body, .card { transition: background-color .22s ease, color .22s ease, border-color .22s ease }
+
+/* In dark mode, make Read Case (primary) and other button text blend into the background */
+[data-theme="dark"] .button.primary{ color: #ffffff !important }
+/* Secondary buttons in dark mode: dark background with white text */
+[data-theme="dark"] .button:not(.primary){
+  background: var(--surface-elevated);
+  color: #ffffff !important;
+  /* white border for clearer separation on dark surfaces */
+  border: 1px solid rgba(255,255,255,0.16);
+  /* subtle inner highlight to give the button a tactile surface */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
 
 /* Mobile */
 @media (max-width:720px){
