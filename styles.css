@@ -60,6 +60,35 @@ body{
 .cta.ghost{ background:transparent; color:#fff; border-color:#fff }
 
 /* Page header (used on non-hero pages) */
+
+.notice-bar{
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid #ccc5e8; /* soft violet / blue */
+}
+
+.notice-bar p{
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.notice-bar a{
+  font-weight: 600;
+  color: #e42cbc;
+  text-decoration: none;
+}
+
+.notice-bar a:hover{
+  text-decoration: underline;
+}
+
 .pagehead{ background:linear-gradient(135deg, rgba(233,116,180,.06), rgba(198,90,156,.04)); border-bottom:1px solid var(--border) }
 .pagehead-inner{ max-width:1080px; margin:0 auto; padding:2.2rem 1rem }
 h1{ margin:0 0 .5rem; font-size:2rem }
